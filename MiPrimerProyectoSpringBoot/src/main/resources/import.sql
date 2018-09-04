@@ -1,0 +1,1 @@
+insert into Persona(id,nombre,estatura,edad,fecha) values(1,'David',1.65,35,parsedatetime('17-09-2012 18:47:52.69', 'dd-MM-yyyy hh:mm:ss.SS'));
