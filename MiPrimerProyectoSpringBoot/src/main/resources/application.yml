@@ -1,8 +1,48 @@
 spring:
+  profiles: dev
   datasource:
     url: jdbc:h2:mem:tacocloud;MODE=MySQL
     username: a
     password: a
     driver-class-name: org.h2.Driver
 
+---
+spring:
+  profiles: prod
+  datasource:
+    url: jdbc:mysql://localhost/tacocloud
+    username: user
+    password: user
+    driver-class-name: org.mysql.Driver
+
+---
+spring:
+  profiles:
+    active:
+    - dev
+  
+logging:
+  path: app/logs
+  file: TacoCloud.log
+  level:
+    root: INFO 
+    
+taco:
+  orders:
+    limit: 200000
+    
+management:
+  endpoint:
+    health:
+      show-details: always
+  endpoints:
+    web:
+      base-path: /management
+      exposure:
+        include: '*'
+
+info:
+  contact:
+    email: drequena@everis.com
+    phone: 113987
     
