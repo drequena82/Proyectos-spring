@@ -1,0 +1,35 @@
+spring:
+  profiles: dev
+  datasource:
+    url: jdbc:mysql://localhost/billing
+    username: root
+    password: 
+    driver-class-name: com.mysql.jdbc.Driver
+
+  
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    
+  
+---
+spring:
+  profiles: prod
+  datasource:
+    url: jdbc:mysql://localhost/billing
+    username: root
+    password: 1234143
+    driver-class-name: com.mysql.jdbc.Driver
+
+---
+spring:
+  profiles:
+    active:
+    - dev
+  
+logging:
+  path: app/logs
+  file: billing.log
+  level:
+    root: INFO 
+    
