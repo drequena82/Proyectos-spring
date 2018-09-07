@@ -6,6 +6,9 @@ spring:
     password: 
     driver-class-name: com.mysql.jdbc.Driver
 
+  data:
+    rest: 
+      base-path: /api
   
   jpa:
     hibernate:
@@ -32,4 +35,6 @@ logging:
   file: billing.log
   level:
     root: INFO 
+    
+
     
