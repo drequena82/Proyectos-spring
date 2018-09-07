@@ -1,12 +1,12 @@
 package io.spring.billing.repositories;
 
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.data.repository.query.Param;
 
 import io.spring.billing.entities.Bill;
 
-public interface BillRepository extends CrudRepository<Bill, Long>{
+public interface BillRepository extends PagingAndSortingRepository<Bill, Long>{
 	
 	public Iterable<Bill> findByClientId(Long id);
 	

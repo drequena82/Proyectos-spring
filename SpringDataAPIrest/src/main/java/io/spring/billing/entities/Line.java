@@ -18,7 +18,7 @@ import lombok.Setter;
 
 @TableGenerator(
 		name="LINE_GEN",
-		initialValue= 1,
+		initialValue= 15,
 		pkColumnName="ENTITY",
 		pkColumnValue="ID",
 		allocationSize=10,

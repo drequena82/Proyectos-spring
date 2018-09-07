@@ -16,7 +16,7 @@ import lombok.Setter;
 
 @TableGenerator(
 		name="PRODUCT_GEN",
-		initialValue= 1,
+		initialValue= 9,
 		pkColumnName="ENTITY",
 		pkColumnValue="ID",
 		allocationSize=10,

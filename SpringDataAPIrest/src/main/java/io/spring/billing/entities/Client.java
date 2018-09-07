@@ -20,7 +20,7 @@ import lombok.Setter;
 
 @TableGenerator(
 		name="CLIENT_GEN",
-		initialValue= 1,
+		initialValue= 6,
 		pkColumnName="ENTITY",
 		pkColumnValue="ID",
 		allocationSize=10,
