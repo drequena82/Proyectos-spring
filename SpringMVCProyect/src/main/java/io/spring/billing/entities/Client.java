@@ -14,6 +14,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.TableGenerator;
+import javax.validation.constraints.NotEmpty;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -21,7 +22,7 @@ import lombok.Setter;
 
 @TableGenerator(
 		name="CLIENT_GEN",
-		initialValue= 1,
+		initialValue= 20,
 		pkColumnName="ENTITY",
 		pkColumnValue="ID",
 		allocationSize=10,
@@ -40,15 +41,18 @@ public class Client  implements BillingEntity{
 	private Long id;
 	
 	@Column(name="NAME", nullable=false, length=100)
+	@NotEmpty
 	private String name;
 	
 	@Embedded
 	private Audit audit;
 	
 	@Column(name="SURNAME", nullable=false, length=100)
+	@NotEmpty
 	private String surname;
 	
 	@Column(name="EMAIL", nullable=false, length=200)
+	@NotEmpty
 	private String email;
 	
 	@OneToMany(fetch=FetchType.EAGER)

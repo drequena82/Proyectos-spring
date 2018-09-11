@@ -4,6 +4,7 @@ import java.sql.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
+import javax.validation.constraints.NotEmpty;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -15,9 +16,10 @@ import lombok.Setter;
 @Setter
 public class Audit {
 	
-	@Column(name="update_on")
+	@Column(name="updateOn")
 	private Date updateOn;
 	
-	@Column(name="create_on")
+	@Column(name="createOn")
+	@NotEmpty
 	private Date createOn;
 }

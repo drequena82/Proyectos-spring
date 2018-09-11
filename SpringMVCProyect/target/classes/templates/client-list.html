@@ -10,11 +10,15 @@
 <div th:include="header :: header"></div>
 
 <div class="container m-5">
-	
-	<div class="card">
-		<button class="btn btn-primary btn-lg active"> New client</button>
+	<div th:class="${'1'.equals(resultCode)}?'alert alert-primary'" role="alert">
+  		<p th:text="${message}">
 	</div>
 	
+	
+	<div class="card">
+		<a th:href="@{/client/new}" class="btn btn-primary btn-lg active"> New client</a>
+	</div>
+	<hr>
 	<div class="card">
 	<table class="table table-striped">
 		<thead>
