@@ -5,6 +5,6 @@ Built-By: drequena
 Implementation-Vendor-Id: com.example
 Build-Jdk: 1.8.0_171
 Implementation-URL: https://projects.spring.io/spring-boot/#/spring-bo
- ot-starter-parent/SpringDataJPAProyect
+ ot-starter-parent/SpringDataMVCProyect
 Created-By: Maven Integration for Eclipse
 

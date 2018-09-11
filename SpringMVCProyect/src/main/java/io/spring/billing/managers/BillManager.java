@@ -1,5 +1,6 @@
 package io.spring.billing.managers;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,6 +46,9 @@ public class BillManager extends AbstractManager<Bill>{
 		return this.repo.fetchByIdWithClientWithLineWithProduct(id);
 	}
 	
+	public List<Bill>fetchByClientIdWithLineWithProduct(Long id) {
+		return this.repo.fetchByClientIdWithLineWithProduct(id);
+	}
 	@Override
 	public BillRepository getInstance() {
 		// TODO Auto-generated method stub

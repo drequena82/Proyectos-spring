@@ -1,5 +1,7 @@
 package io.spring.billing.repositories;
 
+import java.util.List;
+
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
@@ -12,5 +14,8 @@ public interface BillRepository extends CrudRepository<Bill, Long>{
 	
 	@Query("select b from Bill b join fetch b.client c join fetch b.lines l join fetch l.product where b.id=:idBill")
 	public Bill fetchByIdWithClientWithLineWithProduct(@Param("idBill") Long id);
+	
+	@Query("select b from Bill b join fetch b.client c join fetch b.lines l join fetch l.product where c.id=:idClient")
+	public List<Bill> fetchByClientIdWithLineWithProduct(@Param("idClient") Long id);
 	
 }

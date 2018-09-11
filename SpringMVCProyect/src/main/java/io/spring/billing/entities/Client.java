@@ -5,6 +5,7 @@ import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -50,7 +51,7 @@ public class Client  implements BillingEntity{
 	@Column(name="EMAIL", nullable=false, length=200)
 	private String email;
 	
-	@OneToMany()
+	@OneToMany(fetch=FetchType.EAGER)
 	@JoinColumn(name="fk_bills")
 	private List<Bill> bills;
 }

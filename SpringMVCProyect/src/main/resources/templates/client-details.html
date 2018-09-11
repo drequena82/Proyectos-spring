@@ -1,0 +1,65 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+
+<html xmlns:th="http://www.thymeleaf.org">
+
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+	integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+	crossorigin="anonymous">
+
+<div th:include="header :: header"></div>
+
+<div class="container m-5">
+	<div th:object="${client}" class="card" style="width: 18rem;">
+		<img class="card-img-top" src=".../100px180/" alt="Card image cap">
+		<div class="card-body">
+			<ul class="list-group">
+  				<li class="list-group-item" th:text="*{name}"></li>
+  				<li class="list-group-item" th:text="*{surname}"></li>
+  				<li class="list-group-item" th:text="*{email}"></li>
+  				<li class="list-group-item" th:text="*{audit.createOn}"></li>
+  			</ul>
+		</div>
+	</div>
+	
+	<div class="card">
+		<table class="table table-striped">
+		<thead>
+			<tr>
+				<th scope="col">id</th>
+				<th scope="col">description</th>
+				<th scope="col">date</th>
+				<th scope="col">total</th>
+				<th scope="col">show</th>
+				<th scope="col">delete</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:each="bill : ${client.bills}">
+				<td th:text ="*{bill.id}"></td>
+				<td th:text ="*{bill.description}"></td>
+				<td th:text ="*{bill.audit.createOn}"></td>
+				<td th:text ="*{client.email}"></td>
+				<td><a th:href="@{'/bill/' + ${bill.id} + '/description'}" class="btn btn-primary btn-lg active">New bill</a></td>
+				<td><a th:href="@{/bill/delete(id=${bill.id})}" class="btn btn-danger btn-lg active">Delete bill</a></td>
+			</tr>
+		</tbody>
+	</table>
+	</div>
+</div>
+<div th:include="footer :: footer"></div>
+</div>
+
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+	integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+	crossorigin="anonymous"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+	integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+	crossorigin="anonymous"></script>
+<script
+	src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
+	integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+	crossorigin="anonymous"></script>
+</html>
