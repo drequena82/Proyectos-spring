@@ -1,23 +1,30 @@
 package io.spring.billing.controllers;
 
 import org.junit.runner.RunWith;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.annotation.DirtiesContext;
-import org.springframework.test.context.TestExecutionListeners;
-import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
-import org.springframework.test.context.support.DirtiesContextTestExecutionListener;
-import org.springframework.test.context.transaction.TransactionalTestExecutionListener;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.modelmapper.ModelMapper;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.web.WebAppConfiguration;
+import org.springframework.test.web.servlet.MockMvc;
 
-import com.github.springtestdbunit.DbUnitTestExecutionListener;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
-@RunWith(SpringRunner.class)
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-@TestExecutionListeners({DependencyInjectionTestExecutionListener.class,
-        DirtiesContextTestExecutionListener.class,
-        TransactionalTestExecutionListener.class,
-        DbUnitTestExecutionListener.class})
-@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
+import io.spring.billing.controller.ClientController;
+
+@RunWith(SpringJUnit4ClassRunner.class)
+@WebAppConfiguration
 public class ClientControllerTest {
-
+	
+	@InjectMocks
+	private ClientController controller;
+	
+	@Mock
+	private ModelMapper mockModelMapper;
+	
+	private MockMvc mockMvc;
+	
+	private ObjectMapper mapper;
+	
+	
 }

@@ -1,42 +1,55 @@
 package io.spring.billing.entities;
 
+import java.util.List;
+
+import javax.persistence.Column;
+import javax.persistence.Embedded;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Index;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import javax.persistence.TableGenerator;
+
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.*;
-import javax.validation.constraints.NotEmpty;
-import java.util.List;
+@TableGenerator(
+		name="BILL_GEN",
+		initialValue= 1,
+		pkColumnName="ENTITY",
+		pkColumnValue="ID",
+		allocationSize=10,
+		table="BILL_GEN"
+		)
 
-@Getter
-@Setter
+@Table(name="BILL",schema="BILLING",indexes={@Index(name="bill_pk",columnList="id")})
 @Entity
-@EqualsAndHashCode(of = {"id"})
-public class Bill implements BillingEntity {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
-    @NotEmpty
-    private String description;
-
-    private String observation;
-
-    @ManyToOne(fetch = FetchType.EAGER)
-    private Client client;
-
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
-    @JoinColumn(name = "bill_id")
-    private List<Line> lines;
-
-    @Embedded
-    private Audit audit = new Audit();
-
-    @Override
-    public String toString() {
-        return String.format("\t\n{id: %s, description: %s, observation: %s, client: %s}",
-                getId(), getDescription(), getObservation(), getClient().getName()+" "+getClient().getSurname());
-    }
-
+@Setter
+@Getter
+@EqualsAndHashCode
+public class Bill implements BillingEntity{
+	
+	@Id
+	@GeneratedValue(strategy=GenerationType.TABLE,generator="BILL_GEN")
+	private Long id;
+	
+	@Column(name="DESCRIPTION")
+	private String description;
+	
+	@Embedded
+	private Audit audit;
+	
+	@ManyToOne
+	private Client client;
+	
+	@Column(name="OBSERVATION")
+	private String observation;
+	
+	@OneToMany(mappedBy="bill")//Referencia al objeto de la otra clase
+	private List<Line> lines;
 }

@@ -1,30 +1,25 @@
 package io.spring.billing.entities;
 
+import java.sql.Date;
+
+import javax.persistence.Column;
+import javax.persistence.Embeddable;
+import javax.validation.constraints.NotEmpty;
+
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.Embeddable;
-import javax.persistence.PrePersist;
-import javax.persistence.PreUpdate;
-import java.util.Date;
-
+@Embeddable
+@EqualsAndHashCode
 @Getter
 @Setter
-@Embeddable
 public class Audit {
-
-    private Date createOn;
-
-    private Date updateOn;
-
-    @PrePersist
-    public void prePersist() {
-        this.createOn = new Date();
-    }
-
-    @PreUpdate
-    public void preUpdate() {
-        this.updateOn = new Date();
-    }
-
+	
+	@Column(name="updateOn")
+	private Date updateOn;
+	
+	@Column(name="createOn")
+	@NotEmpty
+	private Date createOn;
 }

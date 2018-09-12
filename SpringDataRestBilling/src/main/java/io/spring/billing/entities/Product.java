@@ -1,35 +1,45 @@
 package io.spring.billing.entities;
 
+import javax.persistence.Column;
+import javax.persistence.Embedded;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Index;
+import javax.persistence.Table;
+import javax.persistence.TableGenerator;
+
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.*;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
+@TableGenerator(
+		name="PRODUCT_GEN",
+		initialValue= 1,
+		pkColumnName="ENTITY",
+		pkColumnValue="ID",
+		allocationSize=10,
+		table="PRODUCT_GEN"
+		)
 
-@Getter
-@Setter
+@Table(name="PRODUCT",schema="BILLING",indexes={@Index(name="product_pk",columnList="id")})
 @Entity
-@EqualsAndHashCode(of = {"id"})
-public class Product implements BillingEntity {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
-    @NotEmpty
-    private String name;
-
-    @NotNull
-    private Double price;
-
-    @Embedded
-    private Audit audit = new Audit();
-
-    @Override
-    public String toString() {
-        return String.format("\t\n{id: %s, name: %s, price: %s}",
-                getId(), getName(), getPrice());
-    }
+@Setter
+@Getter
+@EqualsAndHashCode
+public class Product  implements BillingEntity{
+	
+	@Id
+	@GeneratedValue(strategy=GenerationType.TABLE,generator="PRODUCT_GEN")
+	private Long id;
+	
+	@Embedded
+	private Audit audit;
+	
+	@Column(name="NAME")
+	private String name;
+	
+	@Column(name="PRICE")
+	private Double price;
 }

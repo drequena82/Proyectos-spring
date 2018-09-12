@@ -1,42 +1,61 @@
 package io.spring.billing.entities;
 
+import java.util.List;
+
+import javax.persistence.Column;
+import javax.persistence.Embedded;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Index;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import javax.persistence.TableGenerator;
+import javax.validation.constraints.NotEmpty;
+
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.*;
-import javax.validation.constraints.NotEmpty;
-import java.util.List;
-
-@Getter
-@Setter
+@TableGenerator(
+		name="CLIENT_GEN",
+		initialValue= 20,
+		pkColumnName="ENTITY",
+		pkColumnValue="ID",
+		allocationSize=10,
+		table="CLIENT_GEN"
+		)
+@Table(name="CLIENT",schema="billing",indexes={@Index(name="client_pk",columnList="id")})
 @Entity
-@EqualsAndHashCode(of = {"id"})
-public class Client implements BillingEntity {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
-    @NotEmpty
-    private String name;
-
-    @NotEmpty
-    private String surname;
-
-    @NotEmpty
-    private String email;
-
-    @OneToMany(mappedBy = "client", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
-    private List<Bill> bills;
-
-    @Embedded
-    private Audit audit = new Audit();
-
-    @Override
-    public String toString() {
-        return String.format("\t\n{id: %s, name: %s, surname: %s, email: %s}",
-                getId(), getName(), getSurname(), getEmail());
-    }
-
+@Setter
+@Getter
+@EqualsAndHashCode
+public class Client  implements BillingEntity{
+	
+	@Id
+	@Column(name="ID")
+	@GeneratedValue(strategy=GenerationType.TABLE,generator="CLIENT_GEN")
+	private Long id;
+	
+	@Column(name="NAME", nullable=false, length=100)
+	@NotEmpty
+	private String name;
+	
+	@Embedded
+	private Audit audit;
+	
+	@Column(name="SURNAME", nullable=false, length=100)
+	@NotEmpty
+	private String surname;
+	
+	@Column(name="EMAIL", nullable=false, length=200)
+	@NotEmpty
+	private String email;
+	
+	@OneToMany(fetch=FetchType.EAGER)
+	@JoinColumn(name="fk_bills")
+	private List<Bill> bills;
 }

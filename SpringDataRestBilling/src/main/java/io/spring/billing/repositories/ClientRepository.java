@@ -1,18 +1,16 @@
 package io.spring.billing.repositories;
 
-import io.spring.billing.entities.Client;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.PagingAndSortingRepository;
-
 import java.util.List;
 
-public interface ClientRepository extends PagingAndSortingRepository<Client, Long> {
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.repository.CrudRepository;
 
-    List<Client> findByNameAndSurnameAllIgnoreCase(String name, String surname);
+import io.spring.billing.entities.Client;
 
-    List<Client> findBySurnameOrderByNameDesc(String surname);
+public interface ClientRepository extends CrudRepository<Client, Long>,JpaRepository<Client, Long> {
 
-    @Query("select c from Client c left join fetch c.bills b where c.id=?1")
-    Client fetchByIdWithBills(Long id);
-
+	
+	public List<Client> findByNameIgnoreCaseAndSurnameIgnoreCase(String name,String surname);
+	
+	public List<Client> findBySurnameIgnoreCaseOrderByNameDesc(String surname);
 }

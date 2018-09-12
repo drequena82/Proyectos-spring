@@ -33,4 +33,4 @@ logging:
   file: garage.log
   level:
     root: INFO 
-    
+
