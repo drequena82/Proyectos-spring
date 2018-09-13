@@ -1,0 +1,10 @@
+Manifest-Version: 1.0
+Implementation-Title: SpringDataJPAProyect
+Implementation-Version: 0.0.1-SNAPSHOT
+Built-By: drequena
+Implementation-Vendor-Id: io.spring.billing
+Build-Jdk: 1.8.0_171
+Implementation-URL: https://projects.spring.io/spring-boot/#/spring-bo
+ ot-starter-parent/SpringSecurityProject
+Created-By: Maven Integration for Eclipse
+

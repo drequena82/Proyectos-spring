@@ -83,6 +83,12 @@
         	<version>0.7.5</version>
         </dependency>
         
+        <dependency>
+        	<groupId>org.skyscreamer</groupId>
+        	<artifactId>jsonassert</artifactId>
+        	<scope>compile</scope>
+        </dependency>
+        
 	    <dependency>
         	<groupId>io.springfox</groupId>
         	<artifactId>springfox-swagger2</artifactId>
