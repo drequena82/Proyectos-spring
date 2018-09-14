@@ -35,7 +35,7 @@
 		<tbody>
 			<tr th:each="client : ${clients}">
 				<th scope="row">
-				<a th:href="@{'/client/'+ ${client.id} + '/details'}" 
+				<a th:href="@{'/client/'+ ${client.id}}" 
 				class="btn btn-primary btn-lg active">
 					<span th:text="*{client.id}"></span></a>
 				</th>
@@ -43,8 +43,8 @@
 				<td th:text ="*{client.surname}"></td>
 				<td th:text ="*{client.email}"></td>
 				<td th:text ="*{client.audit.createOn}"></td>
-				<td><a th:href="@{/client/new(id=${client.id})}" class="btn btn-primary btn-lg active">New bill</a></td>
-				<td><a th:href="@{/client/delete(id=${client.id})}" class="btn btn-danger btn-lg active">Delete bill</a></td>
+				<td><a th:href="@{/client/new(id=${client.id})}" class="small btn btn-primary btn-lg active">New bill</a></td>
+				<td><a th:href="@{/client/delete/${client.id}}" class="small btn btn-danger btn-lg active">Delete bill</a></td>
 			</tr>
 		</tbody>
 	</table>

@@ -37,7 +37,7 @@ public class ClientController {
 	@Autowired
 	private BillManager billManager;
 	
-	@GetMapping("{id}/details")
+	@GetMapping("{id}")
 	public String getClient(@PathVariable("id") String id,Model model) {
 		Client client = manager.findOne(Long.valueOf(id)).get();
 		List<Bill> bills = billManager.fetchByClientIdWithLineWithProduct(Long.valueOf(id));
@@ -99,8 +99,8 @@ public class ClientController {
 		return red;
 	}
 	
-	@PostMapping("/delete/id={id}")
-	public String deleteClient(@RequestParam("id") String id,RedirectAttributes redirect) {
+	@PostMapping("/delete/{id}")
+	public String deleteClient(@PathVariable("id") String id,RedirectAttributes redirect) {
 		Client client = manager.findOne(Long.valueOf(id)).get();
 		
 		try {

@@ -1,5 +1,6 @@
 package io.spring.billing.managers;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,6 +43,9 @@ public class ProductManager extends AbstractManager<Product>{
 		return this.repo.findByPriceGreaterThanEqual(price);
 	}
 	
+	public List<Product> findByName(String name){
+		return this.repo.findByName(name);
+	}
 	@Override
 	public ProductRepository getInstance() {
 		// TODO Auto-generated method stub
