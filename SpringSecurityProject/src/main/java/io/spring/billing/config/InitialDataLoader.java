@@ -1,8 +1,7 @@
 package io.spring.billing.config;
 
 import java.util.Arrays;
-import java.util.Collection;
-import java.util.List;
+import java.util.HashSet;
 
 import javax.transaction.Transactional;
 
@@ -12,79 +11,61 @@ import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
-import io.spring.billing.entities.Privilege;
 import io.spring.billing.entities.Role;
-import io.spring.billing.entities.UserBilling;
-import io.spring.billing.repositories.PrivilegeRepository;
+import io.spring.billing.entities.User;
 import io.spring.billing.repositories.RoleRepository;
 import io.spring.billing.repositories.UserRepository;
 
 @Component
-public class InitialDataLoader implements
-  ApplicationListener<ContextRefreshedEvent> {
- 
-    boolean alreadySetup = false;
- 
-    @Autowired
-    private UserRepository userRepository;
-  
-    @Autowired
-    private RoleRepository roleRepository;
-  
-    @Autowired
-    private PrivilegeRepository privilegeRepository;
-  
-    @Autowired
-    private PasswordEncoder passwordEncoder;
-  
-    @Override
-    @Transactional
-    public void onApplicationEvent(ContextRefreshedEvent event) {
-  
-        if (alreadySetup)
-            return;
-        Privilege readPrivilege
-          = createPrivilegeIfNotFound("READ_PRIVILEGE");
-        Privilege writePrivilege
-          = createPrivilegeIfNotFound("WRITE_PRIVILEGE");
-  
-        List<Privilege> adminPrivileges = Arrays.asList(
-          readPrivilege, writePrivilege);        
-        createRoleIfNotFound("ROLE_ADMIN", adminPrivileges);
-        createRoleIfNotFound("ROLE_USER", Arrays.asList(readPrivilege));
- 
-        Role adminRole = roleRepository.findByName("ROLE_ADMIN");
-        UserBilling user = new UserBilling();
-        user.setUserName("Test");
-        
-        user.setPassword(passwordEncoder.encode("test"));
-       
-        userRepository.save(user);
- 
-        alreadySetup = true;
+public class InitialDataLoader implements ApplicationListener<ContextRefreshedEvent> {
+
+  boolean alreadySetup = false;
+
+  @Autowired
+  private UserRepository userRepository;
+
+  @Autowired
+  private RoleRepository roleRepository;
+
+  @Autowired
+  private PasswordEncoder passwordEncoder;
+
+  @Override
+  @Transactional
+  public void onApplicationEvent(ContextRefreshedEvent event) {
+    if (alreadySetup) {
+      return;
     }
- 
-    @Transactional
-    private Privilege createPrivilegeIfNotFound(String name) {
-  
-        Privilege privilege = privilegeRepository.findByName(name);
-        if (privilege == null) {
-            privilege = new Privilege();
-            privilegeRepository.save(privilege);
-        }
-        return privilege;
+
+    Role adminRole = createRoleIfNotFound("ROLE_ADMIN");
+    Role supervisorRole = createRoleIfNotFound("ROLE_SUPERVISOR");
+    Role userRole = createRoleIfNotFound("ROLE_USER");
+
+    createUserIfNotFound("admin1", "secret1", adminRole, supervisorRole, userRole);
+    createUserIfNotFound("supervisor1", "secret1", supervisorRole, userRole);
+    createUserIfNotFound("user1", "secret1", userRole);
+
+    alreadySetup = true;
+  }
+
+
+  @Transactional
+  Role createRoleIfNotFound(String name) {
+    Role role = roleRepository.findByName(name);
+    if (role == null) {
+      role = new Role();
+      role.setName(name);
+      roleRepository.save(role);
     }
- 
-    @Transactional
-    private Role createRoleIfNotFound(
-      String name, Collection<Privilege> privileges) {
-  
-        Role role = roleRepository.findByName(name);
-        if (role == null) {
-            role = new Role();
-            //role.setPrivileges(privileges);
-            roleRepository.save(role);
-        }
-        return role;
-    }
+    return role;
+  }
+
+  @Transactional
+  void createUserIfNotFound(String username, String password, Role... roles) {
+    User user = new User();
+    user.setUserName(username);
+    user.setPassword(passwordEncoder.encode(password));
+    user.setRoles(new HashSet<>(Arrays.asList(roles)));
+    userRepository.save(user);
+  }
 }

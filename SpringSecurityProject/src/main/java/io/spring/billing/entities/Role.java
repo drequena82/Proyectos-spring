@@ -29,5 +29,6 @@ public class Role {
 	private String name;
 	
 	@OneToMany
-	private List<UserBilling> users;
+	private List<User> users;
+	
 }

@@ -1,50 +1,43 @@
 package io.spring.billing.entities;
 
+import java.util.Set;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
+import lombok.Getter;
+import lombok.Setter;
+
 @Entity
-public class UserBilling {
-	
+@Setter
+@Getter
+public class User {
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
-	
+
 	@Column
 	@NotEmpty
 	@NotNull
 	private String userName;
-	
+
 	@Column
 	@NotEmpty
 	@NotNull
 	private String password;
-	
-	@ManyToOne(fetch=FetchType.EAGER)
-	private Role userRol;
 
-	public void setId(Long id) {
-		this.id = id;
-	}
+	@ManyToMany
+	@JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
+	private Set<Role> roles;
 
-	public void setUserName(String userName) {
-		this.userName = userName;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
-	}
-
-	public void setUserRol(Role userRol) {
-		this.userRol = userRol;
-	}
-	
 	
 }
